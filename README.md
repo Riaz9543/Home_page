@@ -23,7 +23,6 @@ This is a simple and elegant personal homepage designed using HTML, CSS, and Jav
 1. Clone the repo:
    ```bash
    git clone https://github.com/riaz9543/Home_page.git
-2. add file Link in you Home page url or add
-3. ```bash
+2. Add file location in you Home page url or add this link in your browser home page URL
+```bash
    https://riaz9543.github.io/Home_page/
-in your Home page
