@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevHub - Programmer's Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(148, 163, 184, 0.2);
+            --idea-card: rgba(16, 185, 129, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-bg), #1e293b, #0f172a);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .datetime {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+        
+        .search-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .search-container input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            padding: 10px;
+            width: 100%;
+            outline: none;
+        }
+        
+        .search-container button {
+            background: transparent;
+            border: none;
+            color: var(--accent-blue);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .search-container button:hover {
+            transform: scale(1.1);
+        }
+        
+        .section-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            border-bottom: 2px solid var(--accent-purple);
+        }
+        
+        .section-title i {
+            font-size: 1.3rem;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 18px;
+        }
+        
+        .link-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+        
+        .link-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .link-card i {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            transition: transform 0.3s;
+        }
+        
+        .link-card:hover i {
+            transform: scale(1.15);
+        }
+        
+        .link-card span {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .ai .link-card i { color: var(--accent-purple); }
+        .social .link-card i { color: var(--accent-pink); }
+        .dev .link-card i { color: var(--accent-blue); }
+        .tools .link-card i { color: var(--accent-green); }
+        
+        /* Idea Section */
+        .idea-section {
+            margin: 30px 0;
+        }
+        
+        .idea-form {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(5px);
+        }
+        
+        .idea-form h3 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .idea-form textarea {
+            width: 100%;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 15px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .idea-form button {
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        
+        .idea-form button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .ideas-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .idea-card {
+            background: var(--idea-card);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            position: relative;
+        }
+        
+        .idea-card p {
+            margin-bottom: 10px;
+            color: #d1fae5;
+        }
+        
+        .idea-card .timestamp {
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            opacity: 0.7;
+        }
+        
+        .idea-card .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #f87171;
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .idea-card .delete-btn:hover {
+            opacity: 1;
+        }
+        
+        .quote {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 8rem;
+            color: rgba(59, 130, 246, 0.1);
+            font-family: serif;
+        }
+        
+        .quote p {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .quote .author {
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px 0 15px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: auto;
+            width: 100%;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .links-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 15px;
+            }
+            
+            .link-card {
+                min-height: 110px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .logo {
+                font-size: 2.4rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .search-container {
+                padding: 12px 18px;
+            }
+            
+            .quote {
+                padding: 20px 15px;
+            }
+            
+            .quote p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation effects */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animate">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h1>DevHub - Idea Tracker</h1>
+            <div class="datetime" id="datetime">
+                <!-- Date and time will be inserted here by JS -->
+            </div>
+        </header>
+        
+        <div class="search-container animate delay-1">
+            <input type="text" id="search-input" placeholder="Search Google or enter address...">
+            <button id="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <!-- Ask ChatGPT Section -->
+<div class="idea-form" style="margin-top: 30px;">
+    <h3><i class="fas fa-robot"></i> Ask ChatGPT</h3>
+    <input id="chatgpt-query" type="text" placeholder="Ask ChatGPT..." style="width:100%;padding:10px;border-radius:8px;margin-bottom:10px;">
+    <button onclick="askChatGPT()" style="padding:10px 20px;border-radius:8px;background:#3b82f6;color:white;font-weight:bold;border:none;">Ask</button>
+</div>
+        
+        <div class="section-container">
+            <div class="ai">
+                <h2 class="section-title animate delay-2">
+                    <i class="fas fa-robot"></i> AI Assistants
+                </h2>
+                <div class="links-grid">
+                    <div class="link-card animate delay-3" onclick="window.open('https://chat.openai.com', '_blank')">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>ChatGPT</span>
+                    </div>
+                    <div class="link-card animate delay-4" onclick="window.open('https://www.deepseek.com', '_blank')">
+                        <i class="fas fa-brain"></i>
+                        <span>DeepSeek</span>
+                    </div>
+                    <div class="link-card animate delay-5" onclick="window.open('https://qwen.com', '_blank')">
+                        <i class="fas fa-microchip"></i>
+                        <span>Qwen</span>
+                    </div>
+                    <div class="link-card animate delay-3" onclick="window.open('https://gemini.google.com', '_blank')">
+                        <i class="fas fa-gem"></i>
+                        <span>Gemini</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="social">
+                <h2 class="section-title animate delay-2">
+                    <i class="fas fa-hashtag"></i> Social Networks
+                </h2>
+                <div class="links-grid">
+                    <div class="link-card animate delay-4" onclick="window.open('https://facebook.com', '_blank')">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook</span>
+                    </div>
+                    <div class="link-card animate delay-5" onclick="window.open('https://instagram.com', '_blank')">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dev">
+                <h2 class="section-title animate delay-2">
+                    <i class="fas fa-code"></i> Developer Resources
+                </h2>
+                <div class="links-grid">
+                    <div class="link-card animate delay-3" onclick="window.open('https://github.com', '_blank')">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </div>
+                    <div class="link-card animate delay-4" onclick="window.open('https://stackoverflow.com', '_blank')">
+                        <i class="fab fa-stack-overflow"></i>
+                        <span>Stack Overflow</span>
+                    </div>
+                    <div class="link-card animate delay-5" onclick="window.open('https://developer.mozilla.org', '_blank')">
+                        <i class="fab fa-firefox-browser"></i>
+                        <span>MDN Web Docs</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tools">
+                <h2 class="section-title animate delay-2">
+                    <i class="fas fa-tools"></i> Development Tools
+                </h2>
+                <div class="links-grid">
+                    <div class="link-card animate delay-3" onclick="window.open('https://jsfiddle.net', '_blank')">
+                        <i class="fab fa-js"></i>
+                        <span>JSFiddle</span>
+                    </div>
+                    <div class="link-card animate delay-4" onclick="window.open('https://regex101.com', '_blank')">
+                        <i class="fas fa-terminal"></i>
+                        <span>Regex101</span>
+                    </div>
+                    <div class="link-card animate delay-5" onclick="window.open('https://jsonformatter.org', '_blank')">
+                        <i class="fas fa-brackets-curly"></i>
+                        <span>JSON Formatter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Idea Capture Section -->
+        <div class="idea-section animate delay-2">
+            <div class="idea-form">
+                <h3><i class="fas fa-lightbulb"></i> Capture Your Ideas</h3>
+                <textarea id="idea-input" placeholder="Got a programming idea? A project thought? Write it here before you forget..."></textarea>
+                <button id="save-idea-btn">
+                    <i class="fas fa-save"></i> Save Idea
+                </button>
+            </div>
+            
+            <div class="ideas-container" id="ideas-container">
+                <!-- Saved ideas will appear here -->
+            </div>
+        </div>
+        <div class="quote animate delay-4">
+            <p id="quote-text">"The best time to plant a tree was 20 years ago. The second best time is now."</p>
+            <div class="author" id="quote-author">- Chinese Proverb</div>
+        </div>
+        
+        <footer class="animate delay-5">
+            <p>Made with <i class="fas fa-heart" style="color: #f43f5e;"></i> for Programmers | DevHub v3.0</p>
+            <p style="margin-top: 5px; font-size: 0.85rem;">Your ideas are saved locally - they'll stay even if you refresh</p>
+        </footer>
+    </div>
+
+    <script>
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('datetime').textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        // Initialize and update every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Handle search
+        document.getElementById('search-button').addEventListener('click', performSearch);
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        function performSearch() {
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+        
+        // Programming quotes
+        const quotes = [
+            {
+                text: "The best error message is the one that never shows up.",
+                author: "Thomas Fuchs"
+            },
+            {
+                text: "First, solve the problem. Then, write the code.",
+                author: "John Johnson"
+            },
+            {
+                text: "Programming is the art of telling another human what one wants the computer to do.",
+                author: "Donald Knuth"
+            },
+            {
+                text: "The only way to learn a new programming language is by writing programs in it.",
+                author: "Dennis Ritchie"
+            },
+            {
+                text: "Clean code always looks like it was written by someone who cares.",
+                author: "Robert C. Martin"
+            },
+            {
+                text: "The most disastrous thing that you can ever learn is your first programming language.",
+                author: "Alan Kay"
+            }
+        ];
+        
+        // Set random quote on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-text').textContent = `"${randomQuote.text}"`;
+            document.getElementById('quote-author').textContent = `- ${randomQuote.author}`;
+        });
+        
+        // Idea Saving Functionality
+        const ideaInput = document.getElementById('idea-input');
+        const saveIdeaBtn = document.getElementById('save-idea-btn');
+        const ideasContainer = document.getElementById('ideas-container');
+        
+        // Load saved ideas from localStorage
+        let savedIdeas = JSON.parse(localStorage.getItem('programmerIdeas')) || [];
+        
+        // Display saved ideas
+        function displayIdeas() {
+            ideasContainer.innerHTML = '';
+            
+            if (savedIdeas.length === 0) {
+                ideasContainer.innerHTML = `
+                    <div class="idea-card" style="text-align:center; background:rgba(148, 163, 184, 0.1);">
+                        <p>No ideas saved yet. Capture your first idea above!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            savedIdeas.forEach((idea, index) => {
+                const ideaElement = document.createElement('div');
+                ideaElement.className = 'idea-card';
+                ideaElement.innerHTML = `
+                    <button class="delete-btn" onclick="deleteIdea(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <p>${idea.text}</p>
+                    <div class="timestamp">Saved on: ${idea.date}</div>
+                `;
+                ideasContainer.appendChild(ideaElement);
+            });
+        }
+        
+        // Save a new idea
+        saveIdeaBtn.addEventListener('click', () => {
+            const ideaText = ideaInput.value.trim();
+            
+            if (ideaText) {
+                const now = new Date();
+                const dateString = now.toLocaleString();
+                
+                const newIdea = {
+                    text: ideaText,
+                    date: dateString
+                };
+                
+                savedIdeas.unshift(newIdea);
+                localStorage.setItem('programmerIdeas', JSON.stringify(savedIdeas));
+                
+                ideaInput.value = '';
+                displayIdeas();
+                
+                // Show visual feedback
+                saveIdeaBtn.innerHTML = '<i class="fas fa-check"></i> Idea Saved!';
+                setTimeout(() => {
+                    saveIdeaBtn.innerHTML = '<i class="fas fa-save"></i> Save Idea';
+                }, 2000);
+            }
+        });
+        
+        // Delete an idea
+        window.deleteIdea = function(index) {
+            savedIdeas.splice(index, 1);
+            localStorage.setItem('programmerIdeas', JSON.stringify(savedIdeas));
+            displayIdeas();
+        };
+        
+        // Initialize idea display
+        displayIdeas();
+        
+        // Allow saving with Ctrl+Enter in textarea
+        ideaInput.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                saveIdeaBtn.click();
+            }
+        });
+        // Ask ChatGPT functionality
+function askChatGPT() {
+    const question = document.getElementById("chatgpt-query").value;
+    //alert(question)
+    if (!question) {
+        alert("Please enter your question.");
+        return;
+    }
+    navigator.clipboard.writeText(question).then(() => {        window.open(`https://chat.openai.com/?q=${encodeURIComponent(question)}`, "_blank");
+    }).catch(() => {
+        alert("Could not copy your question, but ChatGPT will still open.");
+        window.open(`https://chat.openai.com/`, "_blank");
+    });
+}
+
+    </script>
+</body>
+</html>
